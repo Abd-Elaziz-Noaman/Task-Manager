@@ -2,10 +2,8 @@ import { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import {
   Box,
-  Toolbar,
   List,
   CssBaseline,
-  Typography,
   Divider,
   IconButton,
   ListItem,
@@ -14,13 +12,12 @@ import {
   ListItemText,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { RiAppsFill } from "react-icons/ri";
+import Header from "../Header/Header";
 
 const drawerWidth = 240;
 const headerHeight = 50;
@@ -56,26 +53,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  left: 65,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    left: 0,
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -83,6 +60,9 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+  "& .MuiPaper-root": {
+    backgroundColor: "#E3EDF7",
+  },
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -108,28 +88,21 @@ export default function Sidebar({ children }) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerClose}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(!open && { display: "none" }),
-            }}
-          >
-            <ChevronLeftIcon /> Back
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Header
+        handleDrawerClose={handleDrawerClose}
+        open={open}
+        drawerWidth={drawerWidth}
+      />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerOpen}>
+          <IconButton
+            onClick={handleDrawerOpen}
+            sx={{
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
             {/* {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
