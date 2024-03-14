@@ -1,18 +1,10 @@
 import { useState } from "react";
-import {
-  Typography,
-  Breadcrumbs,
-  Link,
-  Tabs,
-  Tab,
-  Box,
-  Badge,
-} from "@mui/material";
+import { Typography, Breadcrumbs, Link, Tab, Box, Stack } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
-import { MainContainer } from "./Projects.styled";
+import { MainContainer, NumberChip, StyledTab } from "./Projects.styled";
 
 export default function Projects() {
   const [value, setValue] = useState("2");
@@ -43,6 +35,7 @@ export default function Projects() {
           <Typography color="primary">photo shoot</Typography>
         </Breadcrumbs>
       </div>
+      <br />
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={value}>
           <Box
@@ -55,22 +48,17 @@ export default function Projects() {
               onChange={handleTabChange}
               aria-label="lab API tabs example"
             >
-              <Tab sx={{ textTransform: "none" }} label="General" value="1" />
-              <Tab
-                sx={{ textTransform: "none" }}
+              <StyledTab label="General" value="1" />
+              <StyledTab
                 label={
-                  <>
-                    <p style={{ display: "inline-block" }}>Tasks</p>
-                    <Badge
-                      badgeContent={4}
-                      color="primary"
-                      sx={{ display: "inline-block" }}
-                    />
-                  </>
+                  <Stack spacing={2} direction="row" alignItems="center">
+                    <p>Tasks</p>
+                    <NumberChip>4</NumberChip>
+                  </Stack>
                 }
                 value="2"
               />
-              <Tab label="Item Three" value="3" />
+              <StyledTab label="Item Three" value="3" />
             </TabList>
           </Box>
           <TabPanel value="1">Item One</TabPanel>
