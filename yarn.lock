@@ -1811,7 +1811,20 @@
   dependencies:
     "@babel/runtime" "^7.23.9"
 
-"@mui/material@^5.0.0", "@mui/material@^5.15.13":
+"@mui/lab@^5.0.0-alpha.168":
+  "integrity" "sha512-VKLQP5J/SujylvW3/riMtQYTspTluUkKLW/eu48RwuKby583cFCg8p4fWl4PpC3drwq6g9AeJ7DG4w0K+zFbdA=="
+  "resolved" "https://registry.npmjs.org/@mui/lab/-/lab-5.0.0-alpha.168.tgz"
+  "version" "5.0.0-alpha.168"
+  dependencies:
+    "@babel/runtime" "^7.23.9"
+    "@mui/base" "5.0.0-beta.39"
+    "@mui/system" "^5.15.13"
+    "@mui/types" "^7.2.13"
+    "@mui/utils" "^5.15.13"
+    "clsx" "^2.1.0"
+    "prop-types" "^15.8.1"
+
+"@mui/material@^5.0.0", "@mui/material@^5.15.13", "@mui/material@>=5.15.0":
   "integrity" "sha512-E+QisOJcIzTTyeJ0o3lgYMcyrmCydb2S4cn9vTtGpIB9uR6fQ6La3dIGsXgYEGyeOB9YkWzQbNzYzvyODGEWKA=="
   "resolved" "https://registry.npmjs.org/@mui/material/-/material-5.15.13.tgz"
   "version" "5.15.13"
