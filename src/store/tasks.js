@@ -5,10 +5,14 @@ function getRandomDateFormatted() {
     day: "numeric",
     month: "short",
   })
-    .format(new Date(Math.random() * Date.now()))
+    .format(new Date(2024, 0, 1 + Math.floor(Math.random() * 365)))
     .split(" ")
     .reverse()
     .join(" ");
+  console.log(
+    "🚀 ~ getRandomDateFormatted ~ randomDateFormatted:",
+    randomDateFormatted
+  );
   return randomDateFormatted;
 }
 
@@ -55,6 +59,13 @@ const useTasksStore = create((set) => ({
           date: getRandomDateFormatted(),
         })),
       ],
+    })),
+  filterTasksByDateRange: ([startDate, endDate]) =>
+    set((state) => ({
+      tasks: state.tasks.filter((task) => {
+        const taskDate = new Date(task.date);
+        return taskDate >= startDate && taskDate <= endDate;
+      }),
     })),
 }));
 
