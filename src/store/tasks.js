@@ -60,13 +60,6 @@ const useTasksStore = create((set) => ({
         })),
       ],
     })),
-  filterTasksByDateRange: ([startDate, endDate]) =>
-    set((state) => ({
-      tasks: state.tasks.filter((task) => {
-        const taskDate = new Date(task.date);
-        return taskDate >= startDate && taskDate <= endDate;
-      }),
-    })),
 }));
 
 export default useTasksStore;

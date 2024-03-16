@@ -29,8 +29,6 @@ import {
   StyledTab,
   StyledLabel,
   StyledSelect,
-  StyledIconButton,
-  StyledTextField,
 } from "./Projects.styled";
 import TaskCard from "../../components/TaskCard/TaskCard";
 import TasksAddition from "../../components/TasksAddition/TasksAddition";
@@ -40,7 +38,7 @@ const mainStatusChoices = ["In progress", "In review", "Completed", "Canceled"];
 const taskStatusChoices = ["DEVELOPMENT", "STAGING", "PRODUCTION"];
 
 export default function Projects() {
-  const { tasks, addTasks, filterTasksByDateRange } = useTasksStore();
+  const { tasks, addTasks } = useTasksStore();
   const [value, setValue] = useState("2");
   const [selectedDate, setSelectedDate] = useState([]);
   const [mainTaskStatus, setMainTaskStatus] = useState("");
@@ -53,7 +51,6 @@ export default function Projects() {
   const handleDateChange = (value) => {
     console.log("🚀 ~ handleDateChange ~ date:", value);
     setSelectedDate(value);
-    if (value.length === 2) filterTasksByDateRange(value);
   };
 
   function handleBreadcrumbClick(event) {
