@@ -1,22 +1,41 @@
-import { Stack, TextField, Button } from "@mui/material";
+import { Stack, TextField } from "@mui/material";
 import { MdAccessTime } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
 import { FaUserPlus } from "react-icons/fa";
 
-import { StyledIconButton, StyledTextField } from "./TasksAddition.styled";
+import {
+  MainContainer,
+  StyledIconButton,
+  StyledTextField,
+} from "./TasksAddition.styled";
 
-export default function TasksAddition() {
+export default function TasksAddition(props) {
+  const {
+    task,
+    index,
+    hideSubDetailsHandler,
+    showSubDetailsHandler,
+    newTasksFormOnChangeHandler,
+  } = props;
+  const { description, items, qty, total, showDetails } = task;
   return (
-    <div style={{ width: "fit-content", minWidth: "60%" }}>
+    <MainContainer>
       <Stack direction="row" justifyContent="space-evenly" alignItems="center">
-        <StyledTextField type="text" placeholder="Task description" />
+        <StyledTextField
+          type="text"
+          name="description"
+          value={description}
+          placeholder="Task description"
+          onChange={(e) => newTasksFormOnChangeHandler(e, index)}
+        />
         <StyledIconButton
           sx={{
             bgcolor: "#1976d2",
             color: "#fff",
             "&:hover": { bgcolor: "#1976d2" },
           }}
+          onClick={() => showSubDetailsHandler(index)}
         >
           <FaPlus />
         </StyledIconButton>
@@ -28,31 +47,37 @@ export default function TasksAddition() {
         </StyledIconButton>
       </Stack>
       <br />
-      <Stack
-        direction="row"
-        justifyContent="space-around"
-        alignItems="center"
-        sx={{ width: "60%", ml: 2 }}
-      >
-        <p>items</p>
-        <TextField type="text" name="items" sx={{ width: 80 }} />
-        <p>QTY</p>
-        <TextField type="text" name="qty" sx={{ width: 80 }} />
-        <p>
-          Total <strong>90</strong>
-        </p>
-        <StyledIconButton>
-          <IoClose />
-        </StyledIconButton>
-      </Stack>
-      <Button
-        variant="contained"
-        startIcon={<FaPlus />}
-        color="primary"
-        sx={{ ml: 3, mt: 2, textTransform: "none" }}
-      >
-        Add
-      </Button>
-    </div>
+      {showDetails && (
+        <Stack
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center"
+          sx={{ width: "60%", ml: 2 }}
+        >
+          <p>items</p>
+          <TextField
+            type="number"
+            name="items"
+            value={items}
+            sx={{ width: 80 }}
+            onChange={(e) => newTasksFormOnChangeHandler(e, index)}
+          />
+          <p>QTY</p>
+          <TextField
+            type="number"
+            name="qty"
+            value={qty}
+            sx={{ width: 80 }}
+            onChange={(e) => newTasksFormOnChangeHandler(e, index)}
+          />
+          <p>
+            Total <strong>{total}</strong>
+          </p>
+          <StyledIconButton onClick={() => hideSubDetailsHandler(index)}>
+            <IoClose />
+          </StyledIconButton>
+        </Stack>
+      )}
+    </MainContainer>
   );
 }

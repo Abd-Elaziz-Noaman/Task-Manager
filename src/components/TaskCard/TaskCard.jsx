@@ -1,21 +1,47 @@
 import { useState } from "react";
-import { Avatar, Chip, IconButton, MenuItem, Stack } from "@mui/material";
+import { Avatar, Chip, MenuItem, Stack } from "@mui/material";
 import { ImAttachment } from "react-icons/im";
 import { FiUpload } from "react-icons/fi";
 import { MdAccessTime } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
+
+import useTasksStore from "../../store/tasks";
 
 import { MainContainer, MutedText, StatusSelectBox } from "./TaskCard.styled";
 import { StyledIconButton } from "../../components/TasksAddition/TasksAddition.styled";
 
 export default function TaskCard({ data, choices }) {
-  const { description, items, qty, total, status } = data;
-  const [taskStatus, setTaskStatus] = useState(status);
+  const { id, description, items, qty, total, status, date } = data;
+  const { deleteTask, moveTaskUp, changeTaskStatus } = useTasksStore();
+  const [hovered, setHovered] = useState(false);
 
-  const statusOnChangeHandler = (value) => {
-    setTaskStatus(value);
+  const statusOnChangeHandler = (e) => {
+    let value = e.target.value;
+    console.log("🚀 ~ statusOnChangeHandler ~ value:", value);
+    changeTaskStatus(id, value);
   };
+
+  const onHoverHandler = () => {
+    setHovered(true);
+  };
+
+  const onLeaveHoverHandler = () => {
+    setHovered(false);
+  };
+
+  const deleteHandler = () => {
+    deleteTask(id);
+  };
+
+  const moveUpHandler = () => {
+    moveTaskUp(id);
+  };
+
   return (
-    <MainContainer>
+    <MainContainer
+      onMouseEnter={onHoverHandler}
+      onMouseLeave={onLeaveHoverHandler}
+    >
       <Stack
         direction="row"
         spacing={2}
@@ -25,14 +51,14 @@ export default function TaskCard({ data, choices }) {
         <div>
           <p>{description}</p>
           <Stack direction="row" spacing={2}>
-            <MutedText>Items</MutedText> {items}
-            <MutedText>َQTY</MutedText> {qty}
-            <MutedText>Total</MutedText> {total}
+            <MutedText>Items</MutedText> &nbsp; {items}
+            <MutedText>َQTY</MutedText> &nbsp; {qty}
+            <MutedText>Total</MutedText> &nbsp; {total}
           </Stack>
         </div>
         <Stack direction="row" spacing={2} alignItems="center">
           <StatusSelectBox
-            value={taskStatus}
+            value={status}
             onChange={statusOnChangeHandler}
             displayEmpty
           >
@@ -43,19 +69,27 @@ export default function TaskCard({ data, choices }) {
             ))}
           </StatusSelectBox>
           <>
-            <ImAttachment />
-            17
+            <ImAttachment /> &nbsp;
+            {Math.floor(Math.random() * 90) + 10}
           </>
-          <StyledIconButton aria-label="move-up">
+          <StyledIconButton aria-label="move-up" onClick={moveUpHandler}>
             <FiUpload />
           </StyledIconButton>
           <Chip
             icon={<MdAccessTime />}
-            label="With Icon"
+            label={date}
             color="default"
             sx={{ px: 2 }}
           />
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          {hovered && (
+            <StyledIconButton
+              onClick={deleteHandler}
+              sx={{ height: 35, width: 35 }}
+            >
+              <IoClose />
+            </StyledIconButton>
+          )}
         </Stack>
       </Stack>
     </MainContainer>

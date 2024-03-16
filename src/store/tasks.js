@@ -1,8 +1,27 @@
 import { create } from "zustand";
 
+function getRandomDateFormatted() {
+  const randomDateFormatted = new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "short",
+  })
+    .format(new Date(Math.random() * Date.now()))
+    .split(" ")
+    .reverse()
+    .join(" ");
+  return randomDateFormatted;
+}
+
 const useTasksStore = create((set) => ({
   tasks: [],
-  setTasks: (newTasks) => set({ tasks: newTasks }),
+  setTasks: (newTasks) =>
+    set({
+      tasks: newTasks.map((task) => ({
+        ...task,
+        status: "DEVELOPMENT",
+        date: getRandomDateFormatted(),
+      })),
+    }),
   resetTasks: () => set({ tasks: [] }),
   changeTaskStatus: (taskId, newStatus) =>
     set((state) => ({
@@ -22,6 +41,21 @@ const useTasksStore = create((set) => ({
       }
       return { tasks: state.tasks };
     }),
+  deleteTask: (taskId) =>
+    set((state) => ({
+      tasks: state.tasks.filter((task) => task.id !== taskId),
+    })),
+  addTasks: (newTasks) =>
+    set((state) => ({
+      tasks: [
+        ...state.tasks,
+        ...newTasks.map((task) => ({
+          ...task,
+          status: "DEVELOPMENT",
+          date: getRandomDateFormatted(),
+        })),
+      ],
+    })),
 }));
 
 export default useTasksStore;

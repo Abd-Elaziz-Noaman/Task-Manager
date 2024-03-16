@@ -19,6 +19,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import DatePicker from "react-multi-date-picker";
 import { MdAccessTime } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
+import { FaPlus } from "react-icons/fa6";
 
 import useTasksStore from "../../store/tasks";
 
@@ -39,13 +40,11 @@ const mainStatusChoices = ["In progress", "In review", "Completed", "Canceled"];
 const taskStatusChoices = ["DEVELOPMENT", "STAGING", "PRODUCTION"];
 
 export default function Projects() {
-  const { tasks } = useTasksStore();
+  const { tasks, addTasks } = useTasksStore();
   const [value, setValue] = useState("2");
   const [selectedDate, setSelectedDate] = useState([]);
   const [mainTaskStatus, setMainTaskStatus] = useState("");
-  const [newTasks, setNewTasks] = useState([
-    { description: "", items: "", qty: "", total: "" },
-  ]);
+  const [newTasks, setNewTasks] = useState([]);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -69,6 +68,74 @@ export default function Projects() {
     // Programmatically trigger click on the hidden input
     document.getElementById("dateInput").click();
   };
+
+  const addNewTaskHandler = () => {
+    let demo = {
+      id: generateRandomId(),
+      description: "",
+      items: "",
+      qty: "",
+      total: 0,
+      showDetails: true,
+    };
+    let newState = [...newTasks];
+    newState.push(demo);
+    setNewTasks(newState);
+  };
+
+  const hideSubDetailsHandler = (index) => {
+    let newState = [...newTasks];
+    let selectedTask = newState.find((ele, idx) => idx === index);
+    selectedTask = {
+      ...selectedTask,
+      items: "",
+      qty: "",
+      total: 0,
+      showDetails: false,
+    };
+    newState[index] = selectedTask;
+    setNewTasks(newState);
+  };
+
+  const showSubDetailsHandler = (index) => {
+    let newState = [...newTasks];
+    let selectedTask = newState.find((ele, idx) => idx === index);
+    selectedTask = {
+      ...selectedTask,
+      showDetails: true,
+    };
+    newState[index] = selectedTask;
+    setNewTasks(newState);
+  };
+
+  const newTasksFormOnChangeHandler = (e, index) => {
+    let newState = [...newTasks];
+    let selectedTask = newState.find((ele, idx) => idx === index);
+    selectedTask = {
+      ...selectedTask,
+      [e.target.name]: e.target.value,
+    };
+    selectedTask.total = selectedTask.items * selectedTask.qty;
+    newState[index] = selectedTask;
+    setNewTasks(newState);
+  };
+
+  const cancelTasksHandler = () => {
+    setNewTasks([]);
+  };
+
+  const confirmTasksHandler = () => {
+    addTasks(newTasks);
+    setNewTasks([]);
+  };
+
+  function generateRandomId() {
+    let randomNumber = Math.floor(Math.random() * 10000);
+    let randomId = randomNumber.toString().padStart(4, "0");
+
+    return randomId;
+  }
+
   return (
     <MainContainer>
       <h3>Edit card</h3>
@@ -166,23 +233,76 @@ export default function Projects() {
           </Box>
           <TabPanel value="1">Item One</TabPanel>
           <TabPanel value="2" sx={{ p: 1 }}>
-            {tasks.map((task) => (
-              <div key={task.id}>
-                <TaskCard
-                  // key={task.id}
-                  data={task}
-                  choices={taskStatusChoices}
-                />
-                <Divider />
-              </div>
-            ))}
+            {tasks.length ? (
+              tasks.map((task) => (
+                <div key={task.id}>
+                  <TaskCard
+                    // key={task.id}
+                    data={task}
+                    choices={taskStatusChoices}
+                  />
+                  <Divider />
+                </div>
+              ))
+            ) : (
+              <h3 style={{ textAlign: "center", color: "grey" }}>
+                There are no tasks yet!
+              </h3>
+            )}
           </TabPanel>
           <br />
-          {newTasks.map((task, index) => (
-            <TasksAddition key={index} />
-          ))}
+          <>
+            {newTasks.map((task, index) => (
+              <TasksAddition
+                key={index}
+                task={task}
+                index={index}
+                hideSubDetailsHandler={hideSubDetailsHandler}
+                showSubDetailsHandler={showSubDetailsHandler}
+                newTasksFormOnChangeHandler={newTasksFormOnChangeHandler}
+              />
+            ))}
+            <Button
+              variant="contained"
+              startIcon={<FaPlus />}
+              color="primary"
+              sx={{ ml: 3, mt: 2, textTransform: "none" }}
+              onClick={addNewTaskHandler}
+            >
+              Add
+            </Button>
+          </>
         </TabContext>
       </Box>
+      <br />
+      <br />
+      <br />
+      <br />
+      <Divider />
+      <br />
+      <Stack
+        direction="row"
+        spacing={3}
+        justifyContent="flex-end"
+        alignItems="center"
+      >
+        <Button
+          variant="contained"
+          color="inherit"
+          sx={{ textTransform: "none" }}
+          onClick={cancelTasksHandler}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ textTransform: "none" }}
+          onClick={confirmTasksHandler}
+        >
+          Save Changes
+        </Button>
+      </Stack>
     </MainContainer>
   );
 }

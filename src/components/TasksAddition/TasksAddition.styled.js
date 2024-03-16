@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { Tab, Select, IconButton, TextField } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
+
+export const MainContainer = styled.div`
+  width: fit-content;
+  min-width: 60%;
+  margin-bottom: 15px;
+`;
 
 export const StyledIconButton = styled(IconButton)`
   height: 40px;
