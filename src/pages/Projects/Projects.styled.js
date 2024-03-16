@@ -62,7 +62,7 @@ export const StyledIconButton = styled(IconButton)`
 
 export const StyledTextField = styled(TextField)`
   & .MuiInputBase-root {
-    width: 350px;
+    width: 450px;
     height: 50px;
     padding: 0;
   }

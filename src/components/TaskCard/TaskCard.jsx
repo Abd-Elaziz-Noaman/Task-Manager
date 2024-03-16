@@ -5,7 +5,7 @@ import { FiUpload } from "react-icons/fi";
 import { MdAccessTime } from "react-icons/md";
 
 import { MainContainer, MutedText, StatusSelectBox } from "./TaskCard.styled";
-import { StyledIconButton } from "../../pages/Projects/Projects.styled";
+import { StyledIconButton } from "../../components/TasksAddition/TasksAddition.styled";
 
 export default function TaskCard({ data, choices }) {
   const { description, items, qty, total, status } = data;

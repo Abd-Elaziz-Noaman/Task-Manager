@@ -5,6 +5,7 @@ import { TextField } from "@mui/material";
 export const MainContainer = styled.div`
   width: 100%;
   padding: 0 1rem;
+  margin-bottom: 10px;
 `;
 
 export const MutedText = styled.p`

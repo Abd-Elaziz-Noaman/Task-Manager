@@ -11,6 +11,7 @@ import {
   Divider,
   TextField,
   IconButton,
+  Button,
 } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -18,8 +19,6 @@ import TabPanel from "@mui/lab/TabPanel";
 import DatePicker from "react-multi-date-picker";
 import { MdAccessTime } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
-import { FaPlus } from "react-icons/fa6";
-import { FaUserPlus } from "react-icons/fa";
 
 import useTasksStore from "../../store/tasks";
 
@@ -33,6 +32,7 @@ import {
   StyledTextField,
 } from "./Projects.styled";
 import TaskCard from "../../components/TaskCard/TaskCard";
+import TasksAddition from "../../components/TasksAddition/TasksAddition";
 
 const mainStatusChoices = ["In progress", "In review", "Completed", "Canceled"];
 
@@ -43,6 +43,9 @@ export default function Projects() {
   const [value, setValue] = useState("2");
   const [selectedDate, setSelectedDate] = useState([]);
   const [mainTaskStatus, setMainTaskStatus] = useState("");
+  const [newTasks, setNewTasks] = useState([
+    { description: "", items: "", qty: "", total: "" },
+  ]);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -175,29 +178,9 @@ export default function Projects() {
             ))}
           </TabPanel>
           <br />
-          <Stack
-            direction="row"
-            justifyContent="space-evenly"
-            alignItems="center"
-            sx={{ width: "fit-content", minWidth: "50%" }}
-          >
-            <StyledTextField type="text" placeholder="Task description" />
-            <StyledIconButton
-              sx={{
-                bgcolor: "#1976d2",
-                color: "#fff",
-                "&:hover": { bgcolor: "#1976d2" },
-              }}
-            >
-              <FaPlus />
-            </StyledIconButton>
-            <StyledIconButton>
-              <MdAccessTime />
-            </StyledIconButton>
-            <StyledIconButton>
-              <FaUserPlus />
-            </StyledIconButton>
-          </Stack>
+          {newTasks.map((task, index) => (
+            <TasksAddition key={index} />
+          ))}
         </TabContext>
       </Box>
     </MainContainer>
