@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Avatar, Chip, MenuItem, Stack } from "@mui/material";
 import { ImAttachment } from "react-icons/im";
 import { FiUpload } from "react-icons/fi";
@@ -10,7 +10,7 @@ import useTasksStore from "../../store/tasks";
 import { MainContainer, MutedText, StatusSelectBox } from "./TaskCard.styled";
 import { StyledIconButton } from "../../components/TasksAddition/TasksAddition.styled";
 
-export default function TaskCard({ data, choices }) {
+function TaskCard({ data, choices }) {
   const { id, description, items, qty, total, status, date } = data;
   const { deleteTask, moveTaskUp, changeTaskStatus } = useTasksStore();
   const [hovered, setHovered] = useState(false);
@@ -95,3 +95,5 @@ export default function TaskCard({ data, choices }) {
     </MainContainer>
   );
 }
+
+export default memo(TaskCard);

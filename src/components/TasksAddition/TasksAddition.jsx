@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Stack, TextField } from "@mui/material";
 import { MdAccessTime } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
@@ -10,7 +11,7 @@ import {
   StyledTextField,
 } from "./TasksAddition.styled";
 
-export default function TasksAddition(props) {
+function TasksAddition(props) {
   const {
     task,
     index,
@@ -85,3 +86,5 @@ export default function TasksAddition(props) {
     </MainContainer>
   );
 }
+
+export default memo(TasksAddition);

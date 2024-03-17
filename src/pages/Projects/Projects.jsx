@@ -1,16 +1,12 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import {
   Typography,
   Breadcrumbs,
   Link,
   Box,
   Stack,
-  FormControl,
-  Select,
   MenuItem,
   Divider,
-  TextField,
-  IconButton,
   Button,
 } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
@@ -39,6 +35,7 @@ const taskStatusChoices = ["DEVELOPMENT", "STAGING", "PRODUCTION"];
 
 export default function Projects() {
   const { tasks, addTasks } = useTasksStore();
+
   const [value, setValue] = useState("2");
   const [selectedDate, setSelectedDate] = useState([]);
   const [mainTaskStatus, setMainTaskStatus] = useState(mainStatusChoices[0]);
@@ -49,25 +46,19 @@ export default function Projects() {
   };
 
   const handleDateChange = (value) => {
-    console.log("🚀 ~ handleDateChange ~ date:", value);
     setSelectedDate(value);
   };
 
-  function handleBreadcrumbClick(event) {
+  const handleBreadcrumbClick = (event) => {
     event.preventDefault();
     console.info("You clicked a breadcrumb.");
-  }
+  };
 
   const handleMainTaskStatusChange = (event) => {
     setMainTaskStatus(event.target.value);
   };
 
-  const handleDateLabelClick = () => {
-    // Programmatically trigger click on the hidden input
-    document.getElementById("dateInput").click();
-  };
-
-  const addNewTaskHandler = () => {
+  const addNewTaskHandler = useCallback(() => {
     let demo = {
       id: generateRandomId(),
       description: "",
@@ -79,50 +70,62 @@ export default function Projects() {
     let newState = [...newTasks];
     newState.push(demo);
     setNewTasks(newState);
-  };
+  }, [newTasks]);
 
-  const removeNewTaskHandler = (index) => {
-    let newState = [...newTasks];
-    newState.splice(index, 1);
-    setNewTasks(newState);
-  };
+  const removeNewTaskHandler = useCallback(
+    (index) => {
+      let newState = [...newTasks];
+      newState.splice(index, 1); // To delete array element with a specific index
+      setNewTasks(newState);
+    },
+    [newTasks]
+  );
 
-  const hideSubDetailsHandler = (index) => {
-    let newState = [...newTasks];
-    let selectedTask = newState.find((ele, idx) => idx === index);
-    selectedTask = {
-      ...selectedTask,
-      items: "",
-      qty: "",
-      total: 0,
-      showDetails: false,
-    };
-    newState[index] = selectedTask;
-    setNewTasks(newState);
-  };
+  const hideSubDetailsHandler = useCallback(
+    (index) => {
+      let newState = [...newTasks];
+      let selectedTask = newState.find((ele, idx) => idx === index);
+      selectedTask = {
+        ...selectedTask,
+        items: "",
+        qty: "",
+        total: 0,
+        showDetails: false,
+      };
+      newState[index] = selectedTask;
+      setNewTasks(newState);
+    },
+    [newTasks]
+  );
 
-  const showSubDetailsHandler = (index) => {
-    let newState = [...newTasks];
-    let selectedTask = newState.find((ele, idx) => idx === index);
-    selectedTask = {
-      ...selectedTask,
-      showDetails: true,
-    };
-    newState[index] = selectedTask;
-    setNewTasks(newState);
-  };
+  const showSubDetailsHandler = useCallback(
+    (index) => {
+      let newState = [...newTasks];
+      let selectedTask = newState.find((ele, idx) => idx === index);
+      selectedTask = {
+        ...selectedTask,
+        showDetails: true,
+      };
+      newState[index] = selectedTask;
+      setNewTasks(newState);
+    },
+    [newTasks]
+  );
 
-  const newTasksFormOnChangeHandler = (e, index) => {
-    let newState = [...newTasks];
-    let selectedTask = newState.find((ele, idx) => idx === index);
-    selectedTask = {
-      ...selectedTask,
-      [e.target.name]: e.target.value,
-    };
-    selectedTask.total = selectedTask.items * selectedTask.qty;
-    newState[index] = selectedTask;
-    setNewTasks(newState);
-  };
+  const newTasksFormOnChangeHandler = useCallback(
+    (e, index) => {
+      let newState = [...newTasks];
+      let selectedTask = newState.find((ele, idx) => idx === index);
+      selectedTask = {
+        ...selectedTask,
+        [e.target.name]: e.target.value,
+      };
+      selectedTask.total = selectedTask.items * selectedTask.qty;
+      newState[index] = selectedTask;
+      setNewTasks(newState);
+    },
+    [newTasks]
+  );
 
   const cancelTasksHandler = () => {
     setNewTasks([]);
@@ -133,12 +136,12 @@ export default function Projects() {
     setNewTasks([]);
   };
 
-  function generateRandomId() {
+  const generateRandomId = useMemo(() => {
     let randomNumber = Math.floor(Math.random() * 10000);
     let randomId = randomNumber.toString().padStart(4, "0");
 
     return randomId;
-  }
+  }, []);
 
   return (
     <MainContainer>
