@@ -17,7 +17,6 @@ function TaskCard({ data, choices }) {
 
   const statusOnChangeHandler = (e) => {
     let value = e.target.value;
-    console.log("🚀 ~ statusOnChangeHandler ~ value:", value);
     changeTaskStatus(id, value);
   };
 

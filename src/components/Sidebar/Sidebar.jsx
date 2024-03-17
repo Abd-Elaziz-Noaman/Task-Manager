@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import {
   Box,
   List,
@@ -18,10 +18,6 @@ import {
   Badge,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { RiAppsFill } from "react-icons/ri";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaRegFolderClosed } from "react-icons/fa6";
@@ -107,7 +103,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Sidebar({ children }) {
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(null);
   const [workspace, setWorkspace] = useState(workspaceChoices[0]);
@@ -146,11 +141,6 @@ export default function Sidebar({ children }) {
               },
             }}
           >
-            {/* {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )} */}
             <RiAppsFill />
             {open && <h3 style={{ marginLeft: 5 }}>Shooty</h3>}
           </IconButton>

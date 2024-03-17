@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { StyledSelect } from "../../pages/Projects/Projects.styled";
-import { TextField } from "@mui/material";
 
 export const MainContainer = styled.div`
   width: 100%;
