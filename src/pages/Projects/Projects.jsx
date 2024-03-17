@@ -247,60 +247,60 @@ export default function Projects() {
                 There are no tasks yet!
               </h3>
             )}
-          </TabPanel>
-          <br />
-          <>
-            {newTasks.map((task, index) => (
-              <TasksAddition
-                key={index}
-                task={task}
-                index={index}
-                hideSubDetailsHandler={hideSubDetailsHandler}
-                showSubDetailsHandler={showSubDetailsHandler}
-                newTasksFormOnChangeHandler={newTasksFormOnChangeHandler}
-              />
-            ))}
-            <Button
-              variant="contained"
-              startIcon={<FaPlus />}
-              color="primary"
-              sx={{ ml: 3, mt: 2, textTransform: "none" }}
-              onClick={addNewTaskHandler}
+            <br />
+            <>
+              {newTasks.map((task, index) => (
+                <TasksAddition
+                  key={index}
+                  task={task}
+                  index={index}
+                  hideSubDetailsHandler={hideSubDetailsHandler}
+                  showSubDetailsHandler={showSubDetailsHandler}
+                  newTasksFormOnChangeHandler={newTasksFormOnChangeHandler}
+                />
+              ))}
+              <Button
+                variant="contained"
+                startIcon={<FaPlus />}
+                color="primary"
+                sx={{ ml: 3, mt: 2, textTransform: "none" }}
+                onClick={addNewTaskHandler}
+              >
+                Add
+              </Button>
+            </>
+            <br />
+            <br />
+            <br />
+            <br />
+            <Divider />
+            <br />
+            <Stack
+              direction="row"
+              spacing={3}
+              justifyContent="flex-end"
+              alignItems="center"
             >
-              Add
-            </Button>
-          </>
+              <Button
+                variant="contained"
+                color="inherit"
+                sx={{ textTransform: "none" }}
+                onClick={cancelTasksHandler}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ textTransform: "none" }}
+                onClick={confirmTasksHandler}
+              >
+                Save Changes
+              </Button>
+            </Stack>
+          </TabPanel>
         </TabContext>
       </Box>
-      <br />
-      <br />
-      <br />
-      <br />
-      <Divider />
-      <br />
-      <Stack
-        direction="row"
-        spacing={3}
-        justifyContent="flex-end"
-        alignItems="center"
-      >
-        <Button
-          variant="contained"
-          color="inherit"
-          sx={{ textTransform: "none" }}
-          onClick={cancelTasksHandler}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ textTransform: "none" }}
-          onClick={confirmTasksHandler}
-        >
-          Save Changes
-        </Button>
-      </Stack>
     </MainContainer>
   );
 }
