@@ -34,7 +34,7 @@ export default function UserMenu() {
         onClick={handleClick}
       >
         <Stack spacing={2} direction="row" alignItems="center">
-          <Avatar alt="Abd El-Aziz Noaman" src="/static/images/avatar/1.jpg" />
+          <Avatar alt="Abd El-Aziz Noaman" src="https://i.pravatar.cc/300" />
           <h4>Abd El-Aziz</h4>
           <IoIosArrowDown />
         </Stack>

@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import {
   Typography,
   Breadcrumbs,
@@ -136,12 +136,12 @@ export default function Projects() {
     setNewTasks([]);
   };
 
-  const generateRandomId = useMemo(() => {
+  const generateRandomId = () => {
     let randomNumber = Math.floor(Math.random() * 10000);
     let randomId = randomNumber.toString().padStart(4, "0");
 
     return randomId;
-  }, []);
+  };
 
   return (
     <MainContainer>
