@@ -41,7 +41,7 @@ export default function Projects() {
   const { tasks, addTasks } = useTasksStore();
   const [value, setValue] = useState("2");
   const [selectedDate, setSelectedDate] = useState([]);
-  const [mainTaskStatus, setMainTaskStatus] = useState("");
+  const [mainTaskStatus, setMainTaskStatus] = useState(mainStatusChoices[0]);
   const [newTasks, setNewTasks] = useState([]);
 
   const handleTabChange = (event, newValue) => {
@@ -78,6 +78,12 @@ export default function Projects() {
     };
     let newState = [...newTasks];
     newState.push(demo);
+    setNewTasks(newState);
+  };
+
+  const removeNewTaskHandler = (index) => {
+    let newState = [...newTasks];
+    newState.splice(index, 1);
     setNewTasks(newState);
   };
 
@@ -162,6 +168,10 @@ export default function Projects() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              "@media (max-width: 992px)": {
+                flexDirection: "column-reverse",
+                paddingBottom: 3,
+              },
             }}
           >
             <TabList
@@ -217,9 +227,6 @@ export default function Projects() {
                   onChange={handleMainTaskStatusChange}
                   displayEmpty
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
                   {mainStatusChoices.map((choice, index) => (
                     <MenuItem key={index} value={choice}>
                       {choice}
@@ -245,6 +252,8 @@ export default function Projects() {
             ) : (
               <h3 style={{ textAlign: "center", color: "grey" }}>
                 There are no tasks yet!
+                <br />
+                let's add some?
               </h3>
             )}
             <br />
@@ -257,6 +266,7 @@ export default function Projects() {
                   hideSubDetailsHandler={hideSubDetailsHandler}
                   showSubDetailsHandler={showSubDetailsHandler}
                   newTasksFormOnChangeHandler={newTasksFormOnChangeHandler}
+                  removeNewTaskHandler={removeNewTaskHandler}
                 />
               ))}
               <Button

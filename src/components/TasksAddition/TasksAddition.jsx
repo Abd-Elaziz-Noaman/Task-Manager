@@ -17,6 +17,7 @@ export default function TasksAddition(props) {
     hideSubDetailsHandler,
     showSubDetailsHandler,
     newTasksFormOnChangeHandler,
+    removeNewTaskHandler,
   } = props;
   const { description, items, qty, total, showDetails } = task;
   return (
@@ -44,6 +45,9 @@ export default function TasksAddition(props) {
         </StyledIconButton>
         <StyledIconButton>
           <FaUserPlus />
+        </StyledIconButton>
+        <StyledIconButton onClick={() => removeNewTaskHandler(index)}>
+          <IoClose />
         </StyledIconButton>
       </Stack>
       <br />

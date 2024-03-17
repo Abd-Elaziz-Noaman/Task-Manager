@@ -110,7 +110,7 @@ export default function Sidebar({ children }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(null);
-  const [workspace, setWorkspace] = useState("");
+  const [workspace, setWorkspace] = useState(workspaceChoices[0]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -172,9 +172,6 @@ export default function Sidebar({ children }) {
             onChange={handleWorkspaceChange}
             displayEmpty
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
             {workspaceChoices.map((choice, index) => (
               <MenuItem key={index} value={choice}>
                 {open ? (
@@ -195,7 +192,7 @@ export default function Sidebar({ children }) {
                   <Avatar
                     alt={choice}
                     src="/static/images/avatar/1.jpg"
-                    sx={{ height: 30, width: 30 }}
+                    sx={{ height: 30, width: 30, textAlign: "center" }}
                   />
                 )}
               </MenuItem>

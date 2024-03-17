@@ -6,6 +6,14 @@ export const MainContainer = styled.div`
   width: 80%;
   margin: auto;
   text-align: left;
+
+  @media (max-width: 992px) {
+    width: 95%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const NumberChip = styled.div`
